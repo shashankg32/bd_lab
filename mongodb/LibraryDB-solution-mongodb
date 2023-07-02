@@ -1,0 +1,79 @@
+Queries
+
+1. Populate the database with at least 15 documents 
+db.books.insertMany([{"book_name":"ajay","book_id":1,"book_author":"anil","publication_year":2005,"genre":"fiction","no_of_copy":3,"review":"average"},{"book_name":"bjay","book_id":2,"book_author":"bnil","publication_year":2000,"genre":"fiction","no_of_copy":3,"review":"average"},{"book_name":"cjay","book_id":3,"book_author":"cnil","publication_year":2003,"genre":"fiction","no_of_copy":3,"review":"average"},{"book_name":"djay","book_id":4,"book_author":"dnil","publication_year":2012,"genre":"fiction","no_of_copy":3,"review":"average"},{"book_name":"ejay","book_id":5,"book_author":"enil","publication_year":2005,"genre":"fiction","no_of_copy":4,"review":"average"},{"book_name":"fjay","book_id":6,"book_author":"fnil","publication_year":2000,"genre":"philosophy","no_of_copy":4,"review":"bad"},{"book_name":"gjay","book_id":7,"book_author":"gnil","publication_year":2003,"genre":"philosophy","no_of_copy":5,"review":"bad"},{"book_name":"hjay","book_id":8,"book_author":"hnil","publication_year":2012,"genre":"philosophy","no_of_copy":5,"review":"good"},{"book_name":"ijay","book_id":9,"book_author":"inil","publication_year":2005,"genre":"fiction","no_of_copy":6,"review":"good"},{"book_name":"jjay","book_id":10,"book_author":"jnil","publication_year":2000,"genre":"fiction","no_of_copy":6,"review":"excellent"},{"book_name":"kjay","book_id":11,"book_author":"knil","publication_year":2003,"genre":"fiction","no_of_copy":7,"review":"excellent"},{"book_name":"ljay","book_id":12,"book_author":"lnil","publication_year":2012,"genre":"philosophy","no_of_copy":7,"review":"bad"},{"book_name":"mjay","book_id":13,"book_author":"mnil","publication_year":2005,"genre":"philosophy","no_of_copy":8,"review":"bad"},{"book_name":"njay","book_id":14,"book_author":"nnil","publication_year":2000,"genre":"philosophy","no_of_copy":8,"review":"good"},{"book_name":"ojay","book_id":14,"book_author":"onil","publication_year":2003,"genre":"philosophy","no_of_copy":9,"review":"good"},{"book_name":"pjay","book_id":15,"book_author":"pnil","publication_year":2012,"genre":"philosophy","no_of_copy":9,"review":"excellent"}]);
+
+
+2. List all the records having Publication_year in the range of 2000- 2012
+db.books.find({publication_year: {"$gte": 2000, "$lte": 2012}})
+
+
+3. List all the books belonging to the Genre Fiction.
+db.books.find({genre: "fiction"})
+
+
+4. Count the number of books whose review is "Average".
+db.books.count({review: "average"})
+
+
+5. Find out all the books that have less than 3 copies and publication_year in the
+range of 1995-2003.
+db.books.find({no_of_copy: {"$lt": 3},publication_year: {"$gte": 1995, "$lte": 2003}})
+
+6. Delete a book from the database whose Book_id is B014
+db.books.find({book_id: 14})
+db.books.deleteOne({book_id: 14})
+db.books.find({book_id: 14})
+
+
+7. Update the review of the books to “Excellent” if they have more than 5 copies.
+db.books.find({no_of_copy: {"$gt": 5},})
+db.books.updateMany({no_of_copy: {"$gt": 5},}, {$set: {review: "Excellent"}})
+db.books.find({no_of_copy: {"$gt": 5},})
+
+8. Delete the 11th book in the table and Update the book id of the next books to reflect this data manipulation operation.
+db.books.find({_id: {"$gte": 10},})
+
+db.books.updateMany({_id: {"$gte": 11},}, {$inc: {"book_id": -1}})
+db.books.deleteOne({_id: 11})
+
+db.books.find({_id: {"$gte": 10},})
+
+9. Group all the books by their genre and identify the books with the highest review in each genre.
+db.books.aggregate([{$group: {_id: {genre: "$genre"},best_review: {$max: "$review"}}},{$sort: {best_review: -1}}])
+
+
+10. Apply Map-reduce aggregation function to project the books by their names and find the list of genres
+function map() {
+  emit(this.book_name, this.genre);
+}
+
+function reduce(key, values) {
+  const genres = [];
+  for (const value of values) {
+    genres.push(value);
+  }
+  return {
+    book_name: key,
+    genres: genres,
+  };
+}
+
+db.books.mapReduce(map, reduce, {out: "genres",});
+
+db.genres.find()
+
+OR 
+
+db.books.aggregate([
+  {
+    $group: {
+      _id: {book_name: "$book_name"},
+      genres: {
+        $push: "$genre"
+      }
+    }
+  }
+])
+
+

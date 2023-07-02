@@ -1,0 +1,57 @@
+Exploring the HDFS commands
+
+1. To Print the Hadoop Running processes (JAVA Processes)
+$ jps
+
+2. To check the health of the HDFS le system - fsck
+$ hdfs fsck / # / - Hadoop Root directory
+
+3. The general format of the HDFS command is as follows,
+$ hdfs fs -command_name
+# hdfs - file system
+# dfs/fs - referring the file system command
+
+4. To list all the file in HDFS directory (/)
+$ hdfs dfs -ls / # Lists all the files in the Hadoop root directory
+
+5. To Make a directory in HDFS
+$ hdfs dfs -mkdir /directory_name
+
+6. To create an empty file in HDFS directory
+$ hdfs dfs -touchz filename
+
+7. To check the size of the file - du
+$ hdfs dfs -du -s file_name
+# du - data units
+# s - size of data units
+
+8. To add the content to the existing file - appendToFile
+$ hdfs dfs -appendToFile - filename
+# press ctrl+D to exit
+
+9. To display contents of the file present in the hdfs - cat
+$ hdfs dfs -cat file_name
+
+10. To copy a file from the local lesystem to HDFS- copyFromLocal/(-put)
+$hdfs dfs -copyFromLocal local_file hdfs_directory
+$hdfs dfs -put local_file hdfs_directory
+
+11. To copy a file from HDFS to local lesystem - copyToLocal/(-get)
+$ hdfs dfs -copyToLocal hdfs_local_file local_path_file
+$ hdfs dfs -get hdfs_local_file local_path_file
+
+12. Copying within the same HDFS file system
+$ hdfs dfs -cp hdfs_local_file_path hdfs_second_local_path
+
+13. To move a file within the HDFS le system/ used for renaming too
+$ hdfs dfs -mv local_filesystem_file new_local_file_path
+
+14. rm - remove command - remove the files o
+$ hdfs dfs -rm hdfs_file_name
+
+15. rm -rf - remove forcefully - remove directories
+$ hdfs dfs -rm -r hdfs_directory
+
+16. To get help - usage command - provides help for commands
+$ hdfs dfs usage command_name
+$ hdfs dfs -help # shows all the commands in hdfs

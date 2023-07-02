@@ -1,0 +1,47 @@
+Execrcise-1: Mongo DB
+Use The mongo dB database to Exercise NOSQL Queries to Demonstrate the following with an
+USECASE
+1) Create database
+2) Basic CRUD operations
+3) Aggregate functions
+4) Pipeline
+5) MapReduce
+
+Execrcise-2: Map/Reduce Job Submission
+Start by reviewing HDFS. It found that the composition of HDFS is similar to your local Linux
+file system. Use the hadoopfs command while interacting with HDFS.
+1. Review the commands available for the Hadoop Distributed File System:
+2. Copy file foo.txt from local disk to the user’s directory in HDFS
+3. Get a directory listing of the user’s home directory in HDFS
+4. Get a directory listing of the HDFS root directory
+5. Display the contents of the HDFS file user/fred/bar.txt
+6. Move that file to the local disk, named as baz.txt
+7. Create a directory called input under the user’s home directory
+8. Delete the directory input old and all its contents
+9. Verify the copy by listing the directory contents in HDFS:
+
+Execrcise-3: Map Reduce (Programs)
+Use the Hadoop framework to write a custom MapReduce program to perform word count
+operation on a custom data set .
+
+
+Execrcise-4: Map Reduce (Programs)
+Use the Hadoop framework to write a MapReduce program to read a .csv file into a single node
+Hadoop cluster containing following fields
+Sl. No.
+CARD name
+UserName
+Amount withdrawn
+Implement the following,
+1. Count the Number of transactions done by each user
+2. Find the total amount of money transacted by each user
+
+
+Execrcise-5: Extract facts using Hive :
+1)Create and Drop Databases
+2)Create, Alter , Drop Table
+3)Built-in Operators
+4)Built-in function
+5)Views and Index
+6)HIVEQL(select where , Select Order by, Select group by , Select Joins )
+

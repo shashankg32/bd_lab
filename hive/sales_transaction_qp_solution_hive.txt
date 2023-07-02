@@ -1,0 +1,58 @@
+1. Insert 5 records using Insert command in HiveQL
+hive> create table info(Product string, Price int, Payment_Type string, Name string,City string)
+> row format delimited
+> fields terminated by ",";
+
+Insert into info(“PRODUCT1” , 1000,”VISA”,”JAYA”,” London”, “ England “, “ United Kingdom”);
+Insert into info(“PRODUCT2” , 2000,”VISA”,”SANKET”,” London”, “England “, “ United Kingdom”);
+Insert into info(“PRODUCT#”, 3000,”VISA”,”SAMPRITHA”, “Martin”, “United States”); “TN”,
+Insert into info(“PRODUCT1” , 1000,”VISA”,”GOMATHI”,” London”, “ England “, “ United Kingdom”);
+Insert into info(“PRODUCT1” , 1000,”VISA”,”ADI”,” London”, “ England “, “ United Kingdom”);
+
+2. Import the dataset from the sales.csv file
+hive> load data local inpath '/home/hadoop/Desktop/sales.csv' into table info;
+
+3. Count the number of sales done by each country
+hive> select Country ,count(*) as salescount
+> from info
+> group by Country;
+
+4. Count the number of sales done by each state
+hive> select State,count(*) as salescount
+> from info
+> group by State;
+
+5. Display (Product, name) grouped by product
+hive> select Product,collect_set(Name) as Names
+> from info
+> group by Product;
+
+6. Create separate views for VISA and Mastercard
+hive> CREATE VIEW visa_transaction1 AS
+> SELECT *
+> FROM info
+> WHERE Payment_Type = 'Visa';
+
+hive> SELECT * from visa_transaction1;
+
+7. Show all the transactions done in Seattle
+hive> select * from info
+> where City='Seattle';
+
+8. Find the max number of transactions done within the state of Ontario
+hive> select State,count(*) as transactioncount
+> from info
+> where State='Ontario'
+> group by State
+> order by transactioncount
+> desc
+> limit 1;
+
+9. Find the number of transactions whose price is in between 1500-3600
+hive> select count(*) as transactioncount
+> from info
+> where Price>=1500 AND Price <=3600;
+
+10. List all the transactions done in the United States using Mastercard
+hive> select * from info
+> where Country='United States' and Payment_Type='Mastercard';
